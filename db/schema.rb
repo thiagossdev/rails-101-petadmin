@@ -199,7 +199,7 @@ ActiveRecord::Schema.define(version: 2020_10_30_210009) do
 
   create_table "sells", force: :cascade do |t|
     t.decimal "total"
-    t.bigint "discount_id", null: false
+    t.bigint "discount_id"
     t.bigint "client_id", null: false
     t.text "observations"
     t.integer "status"
