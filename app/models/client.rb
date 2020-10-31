@@ -13,4 +13,7 @@ class Client < ApplicationRecord
   def fae_display_field
     name
   end
+
+  has_many :campaign_clients
+  has_many :campaigns, through: :campaign_clients, dependent: :destroy
 end

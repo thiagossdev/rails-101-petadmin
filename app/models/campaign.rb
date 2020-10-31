@@ -9,5 +9,5 @@ class Campaign < ApplicationRecord
   end
 
   has_many :campaign_clients
-  has_many :clients, through: :campaign_clients
+  has_many :clients, through: :campaign_clients, dependent: :destroy
 end
