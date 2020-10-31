@@ -1,8 +1,8 @@
-class CreateCampaignClients < ActiveRecord::Migration[6.0]
+class CreateCampaignClients < ActiveRecord::Migration[4.2]
   def change
     create_table :campaign_clients do |t|
-      t.references :campaign, null: false, foreign_key: true
-      t.references :client, null: false, foreign_key: true
+      t.references :campaign, foreign_key: true
+      t.references :client, foreign_key: true
 
       t.timestamps
     end

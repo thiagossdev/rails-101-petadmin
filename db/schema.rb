@@ -2,11 +2,11 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
-# be faster and is potentially less error prone than running all of your
-# migrations from scratch. Old migrations may fail to apply correctly if those
-# migrations use external dependencies or application code.
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
 
@@ -15,39 +15,37 @@ ActiveRecord::Schema.define(version: 2020_10_30_220141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "campaign_clients", force: :cascade do |t|
-    t.bigint "campaign_id", null: false
-    t.bigint "client_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["campaign_id"], name: "index_campaign_clients_on_campaign_id"
-    t.index ["client_id"], name: "index_campaign_clients_on_client_id"
+  create_table "campaign_clients", id: :serial, force: :cascade do |t|
+    t.integer "campaign_id"
+    t.integer "client_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "campaigns", force: :cascade do |t|
+  create_table "campaigns", id: :serial, force: :cascade do |t|
     t.string "title"
     t.text "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "clients", force: :cascade do |t|
+  create_table "clients", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.text "observations"
     t.string "phone"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "discounts", force: :cascade do |t|
+  create_table "discounts", id: :serial, force: :cascade do |t|
     t.string "title"
     t.decimal "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "fae_changes", force: :cascade do |t|
+  create_table "fae_changes", id: :serial, force: :cascade do |t|
     t.integer "changeable_id"
     t.string "changeable_type"
     t.integer "user_id"
@@ -60,28 +58,28 @@ ActiveRecord::Schema.define(version: 2020_10_30_220141) do
     t.index ["user_id"], name: "index_fae_changes_on_user_id"
   end
 
-  create_table "fae_files", force: :cascade do |t|
+  create_table "fae_files", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "asset"
     t.string "fileable_type"
-    t.bigint "fileable_id"
+    t.integer "fileable_id"
     t.integer "file_size"
     t.integer "position", default: 0
     t.string "attached_as"
     t.boolean "on_stage", default: true
     t.boolean "on_prod", default: false
     t.boolean "required", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["attached_as"], name: "index_fae_files_on_attached_as"
     t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable_type_and_fileable_id"
   end
 
-  create_table "fae_images", force: :cascade do |t|
+  create_table "fae_images", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "asset"
     t.string "imageable_type"
-    t.bigint "imageable_id"
+    t.integer "imageable_id"
     t.string "alt"
     t.string "caption"
     t.integer "position", default: 0
@@ -90,43 +88,43 @@ ActiveRecord::Schema.define(version: 2020_10_30_220141) do
     t.boolean "on_prod", default: false
     t.integer "file_size"
     t.boolean "required", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["attached_as"], name: "index_fae_images_on_attached_as"
     t.index ["imageable_type", "imageable_id"], name: "index_fae_images_on_imageable_type_and_imageable_id"
   end
 
-  create_table "fae_options", force: :cascade do |t|
+  create_table "fae_options", id: :serial, force: :cascade do |t|
     t.string "title"
     t.string "time_zone"
     t.string "colorway"
     t.string "stage_url"
     t.string "live_url"
     t.integer "singleton_guard"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true
   end
 
-  create_table "fae_roles", force: :cascade do |t|
+  create_table "fae_roles", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "fae_static_pages", force: :cascade do |t|
+  create_table "fae_static_pages", id: :serial, force: :cascade do |t|
     t.string "title"
     t.integer "position", default: 0
     t.boolean "on_stage", default: true
     t.boolean "on_prod", default: false
     t.string "slug"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["slug"], name: "index_fae_static_pages_on_slug"
   end
 
-  create_table "fae_text_areas", force: :cascade do |t|
+  create_table "fae_text_areas", id: :serial, force: :cascade do |t|
     t.string "label"
     t.text "content"
     t.integer "position", default: 0
@@ -135,8 +133,8 @@ ActiveRecord::Schema.define(version: 2020_10_30_220141) do
     t.integer "contentable_id"
     t.string "contentable_type"
     t.string "attached_as"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["attached_as"], name: "index_fae_text_areas_on_attached_as"
     t.index ["contentable_id"], name: "index_fae_text_areas_on_contentable_id"
     t.index ["contentable_type"], name: "index_fae_text_areas_on_contentable_type"
@@ -145,17 +143,17 @@ ActiveRecord::Schema.define(version: 2020_10_30_220141) do
     t.index ["position"], name: "index_fae_text_areas_on_position"
   end
 
-  create_table "fae_text_fields", force: :cascade do |t|
+  create_table "fae_text_fields", id: :serial, force: :cascade do |t|
     t.string "contentable_type"
-    t.bigint "contentable_id"
+    t.integer "contentable_id"
     t.string "attached_as"
     t.string "label"
     t.string "content"
     t.integer "position", default: 0
     t.boolean "on_stage", default: true
     t.boolean "on_prod", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["attached_as"], name: "index_fae_text_fields_on_attached_as"
     t.index ["contentable_type", "contentable_id"], name: "index_fae_text_fields_on_contentable_type_and_contentable_id"
     t.index ["on_prod"], name: "index_fae_text_fields_on_on_prod"
@@ -163,7 +161,7 @@ ActiveRecord::Schema.define(version: 2020_10_30_220141) do
     t.index ["position"], name: "index_fae_text_fields_on_position"
   end
 
-  create_table "fae_users", force: :cascade do |t|
+  create_table "fae_users", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -186,8 +184,8 @@ ActiveRecord::Schema.define(version: 2020_10_30_220141) do
     t.integer "role_id"
     t.boolean "active"
     t.string "language"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["confirmation_token"], name: "index_fae_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_fae_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true
@@ -195,64 +193,57 @@ ActiveRecord::Schema.define(version: 2020_10_30_220141) do
     t.index ["unlock_token"], name: "index_fae_users_on_unlock_token", unique: true
   end
 
-  create_table "products", force: :cascade do |t|
+  create_table "products", id: :serial, force: :cascade do |t|
     t.string "title"
     t.string "description"
     t.decimal "price"
     t.text "observations"
-    t.bigint "supplier_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["supplier_id"], name: "index_products_on_supplier_id"
+    t.integer "supplier_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "sell_products", force: :cascade do |t|
-    t.bigint "product_id", null: false
-    t.bigint "sell_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["product_id"], name: "index_sell_products_on_product_id"
-    t.index ["sell_id"], name: "index_sell_products_on_sell_id"
+  create_table "sell_products", id: :serial, force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "sell_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "sell_services", force: :cascade do |t|
-    t.bigint "service_id", null: false
-    t.bigint "sell_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["sell_id"], name: "index_sell_services_on_sell_id"
-    t.index ["service_id"], name: "index_sell_services_on_service_id"
+  create_table "sell_services", id: :serial, force: :cascade do |t|
+    t.integer "service_id"
+    t.integer "sell_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "sells", force: :cascade do |t|
+  create_table "sells", id: :serial, force: :cascade do |t|
     t.decimal "total"
-    t.bigint "discount_id"
-    t.bigint "client_id", null: false
+    t.integer "discount_id"
+    t.integer "client_id"
     t.text "observations"
     t.integer "status"
     t.date "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["client_id"], name: "index_sells_on_client_id"
-    t.index ["discount_id"], name: "index_sells_on_discount_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "services", force: :cascade do |t|
+  create_table "services", id: :serial, force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.integer "price"
     t.text "observations"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "suppliers", force: :cascade do |t|
+  create_table "suppliers", id: :serial, force: :cascade do |t|
     t.string "name"
     t.text "observations"
     t.string "email"
     t.string "phone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_foreign_key "campaign_clients", "campaigns"

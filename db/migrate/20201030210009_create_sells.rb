@@ -1,9 +1,9 @@
-class CreateSells < ActiveRecord::Migration[5.2]
+class CreateSells < ActiveRecord::Migration[4.2]
   def change
     create_table :sells do |t|
       t.decimal :total
-      t.references :discount, null: true, foreign_key: true
-      t.references :client, null: false, foreign_key: true
+      t.references :discount, foreign_key: true
+      t.references :client, foreign_key: true
       t.text :observations
       t.integer :status
       t.date :date

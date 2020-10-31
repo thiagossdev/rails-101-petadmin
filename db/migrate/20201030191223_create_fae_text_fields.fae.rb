@@ -1,5 +1,5 @@
 # This migration comes from fae (originally 20141105214814)
-class CreateFaeTextFields < ActiveRecord::Migration[5.2]
+class CreateFaeTextFields < ActiveRecord::Migration[4.2]
   def change
     create_table :fae_text_fields do |t|
       t.references :contentable, polymorphic: true, index: true
